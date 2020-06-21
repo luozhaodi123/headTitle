@@ -9,6 +9,11 @@ import 'vant/lib/index.css'
 // 3、注册vant-ui组件库
 Vue.use(Vant)
 
+// 导入axios第三方包
+import axios from 'axios'
+//把axios绑定在vue的原型上
+Vue.prototype.$axios = axios
+
 Vue.config.productionTip = false
 
 new Vue({
