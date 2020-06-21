@@ -23,7 +23,8 @@ export default {
   methods: {
     showTips() {
       if (!this.isFlag) {
-        alert(this.errMsg);
+        // alert(this.errMsg);
+        this.$toast(this.errMsg);
       }
     }
   },
