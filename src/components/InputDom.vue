@@ -7,7 +7,7 @@
     :class="{
     error: !isFlag
   }"
-    @blur="missBlur"
+    @blur="showTips"
   />
 </template>
 
@@ -21,22 +21,17 @@ export default {
     };
   },
   methods: {
-    missBlur() {
+    showTips() {
       if (!this.isFlag) {
-        alert("当前输入的内容不合法，请重新输入");
+        alert(this.errMsg);
       }
     }
   },
   watch: {
     inputVal(newVal) {
-      // console.log(newVal);
       this.$emit("InputVal", newVal);
       const regExp = new RegExp(this.rule);
       this.isFlag = regExp.test(newVal);
-      // console.log(this.isFlag);
-      if (!this.isFlag) {
-        console.log(this.errMsg);
-      }
     }
   }
 };

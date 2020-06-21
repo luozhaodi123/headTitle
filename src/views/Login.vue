@@ -4,7 +4,7 @@
       <div class="iconfont iconicon-test"></div>
       <div class="iconfont iconnew"></div>
       <form action>
-        <label for class="text">用户:</label>
+        <label class="text">用户:</label>
         <InputDom
           textType="text"
           @InputVal="inputUser"
@@ -13,7 +13,7 @@
           errMsg="请输入正确的手机号"
         ></InputDom>
         <br />
-        <label for class="text">密码:</label>
+        <label class="text">密码:</label>
         <InputDom
           textType="password"
           @InputVal="inputPwd"

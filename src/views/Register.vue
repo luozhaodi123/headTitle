@@ -4,7 +4,7 @@
       <div class="iconfont iconicon-test"></div>
       <div class="iconfont iconnew"></div>
       <form action>
-        <label for class="text">用户:</label>
+        <label class="text">用户:</label>
         <InputDom
           textType="text"
           @InputVal="inputUser"
@@ -12,7 +12,7 @@
           rule="^\d{3,11}$"
           errMsg="请输入正确的手机号"
         ></InputDom>
-        <label for class="text">昵称:</label>
+        <label class="text">昵称:</label>
         <InputDom
           textType="text"
           @InputVal="inputNickName"
