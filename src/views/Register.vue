@@ -29,6 +29,7 @@
           errMsg="请输入3到9位的密码"
         ></InputDom>
       </form>
+
       <btnDom btnText="注册" @clickBtn="register"></btnDom>
     </div>
   </div>
@@ -46,18 +47,41 @@ export default {
     return {
       userName: "",
       nickName: "",
-      password: ""
+      passWord: ""
     };
   },
   methods: {
     register() {
       console.log("父组件的事件被触发了");
+      if (this.userName != "" && this.nickName != "" && this.passWord != "") {
+        this.$axios({
+          url: "http://localhost:3000/register",
+          method: "post",
+          data: {
+            username: this.userName,
+            password: this.passWord,
+            nickname: this.nickName
+          }
+        }).then(res => {
+          console.log(res);
+          if (res.status == 200 && !res.data.statusCode) {
+            this.$toast("注册成功，两秒后跳转到登录页,请销后...");
+            setTimeout(() => {
+              this.$router.back();
+            }, 2000);
+          } else {
+            this.$toast("该用户名已注册，请重新输入");
+          }
+        });
+      } else {
+        this.$toast("亲，你输入的内容有空，请输入");
+      }
     },
     inputUser(user) {
       this.userName = user;
     },
     inputPwd(pwd) {
-      this.password = pwd;
+      this.passWord = pwd;
     },
     inputNickName(nickname) {
       this.nickName = nickname;
