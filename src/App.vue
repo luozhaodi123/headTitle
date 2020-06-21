@@ -8,10 +8,12 @@
 // 引入loginDom组件
 import loginDom from "./views/Login";
 import RegisterDom from "./views/Register";
+import IndexDom from "./views/Index";
 export default {
   components: {
     loginDom,
-    RegisterDom
+    RegisterDom,
+    IndexDom
   }
 };
 </script>

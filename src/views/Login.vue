@@ -24,6 +24,9 @@
         <br />
       </form>
       <btnDom btnText="登录" @clickBtn="login"></btnDom>
+      <div class="tips">
+        <router-link to="/register">没有账号？跳转到注册页面</router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -44,8 +47,28 @@ export default {
   },
   methods: {
     login() {
-      console.log("父组件的事件被触发了");
-      // console.log(this.userName, this.passWord);
+      this.$axios({
+        url: "http://localhost:3000/login",
+        method: "post",
+        data: {
+          username: this.userName,
+          password: this.passWord
+        }
+      }).then(res => {
+        console.log(res);
+        if (res.status == 200 && !res.data.statusCode) {
+          // alert("登录成功");
+          // console.log(res.data.data.token);
+          this.$toast("登录成功，两秒后跳转到首页");
+          localStorage.setItem("token", res.data.data.token);
+          setTimeout(() => {
+            location.href = "/index";
+          }, 2000);
+        } else {
+          // alert("用户名不存在或密码错误");
+          this.$toast("用户不存在或密码错误");
+        }
+      });
     },
     inputUser(user) {
       this.userName = user;
@@ -75,6 +98,12 @@ export default {
     height: 10vw;
     font-size: 4.44vw;
     line-height: 10vw;
+  }
+  .tips {
+    text-align: center;
+    line-height: 40px;
+    margin-top: 20px;
+    color: skyblue;
   }
 }
 </style>
