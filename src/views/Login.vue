@@ -9,7 +9,7 @@
           textType="text"
           @InputVal="inputUser"
           textPlaceholder="用户名/手机号码"
-          rule="^\d{3,11}$"
+          :rule="ruleUser"
           errMsg="请输入正确的手机号"
         ></InputDom>
         <br />
@@ -18,7 +18,7 @@
           textType="password"
           @InputVal="inputPwd"
           textPlaceholder="密码"
-          rule="^.{3,9}$"
+          :rule="rulePwd"
           errMsg="请输入3到9位的密码"
         ></InputDom>
         <br />
@@ -38,7 +38,9 @@ export default {
   data() {
     return {
       userName: "",
-      passWord: ""
+      passWord: "",
+      ruleUser: "^\\d{3,11}$",
+      rulePwd: "^.{3,9}$"
     };
   },
   components: {
@@ -47,6 +49,21 @@ export default {
   },
   methods: {
     login() {
+      // 在发送axios请求前，对数据进行校验
+      if (!this.userName || !this.passWord) {
+        this.$toast("亲，请输入完整信息...");
+        return;
+      }
+      var regExpUser = new RegExp(this.ruleUser);
+      if (!regExpUser.test(this.userName)) {
+        this.$toast("用户名格式错误");
+        return;
+      }
+      var regExpPwd = new RegExp(this.rulePwd);
+      if (!regExpUser.test(this.passWord)) {
+        this.$toast("密码格式错误");
+        return;
+      }
       this.$axios({
         url: "http://localhost:3000/login",
         method: "post",
@@ -62,7 +79,7 @@ export default {
           this.$toast("登录成功，两秒后跳转到首页");
           localStorage.setItem("token", res.data.data.token);
           setTimeout(() => {
-            location.href = "/index";
+            location.href = "/person";
           }, 2000);
         } else {
           // alert("用户名不存在或密码错误");

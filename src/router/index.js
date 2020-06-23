@@ -3,14 +3,14 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
-import Index from '../views/Index.vue'
+import Person from '../views/Person.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    component: Index
+    component: Person
   },
   {
     path: '/login',
@@ -21,8 +21,8 @@ const routes = [
     component: Register
   },
   {
-    path: '/index',
-    component: Index
+    path: '/person',
+    component: Person
   }
 ]
 

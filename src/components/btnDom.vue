@@ -9,7 +9,7 @@ export default {
   props: ["btnText"],
   methods: {
     btnClick() {
-      console.log("子组件的事件被触发了");
+      // console.log("子组件的事件被触发了");
       this.$emit("clickBtn");
     }
   }
