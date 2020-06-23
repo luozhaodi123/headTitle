@@ -76,10 +76,14 @@ export default {
         if (res.status == 200 && !res.data.statusCode) {
           // alert("登录成功");
           // console.log(res.data.data.token);
-          this.$toast("登录成功，两秒后跳转到首页");
-          localStorage.setItem("token", res.data.data.token);
+          this.$toast("登录成功");
+          const { data } = res.data;
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("userId", data.user.id);
           setTimeout(() => {
-            location.href = "/person";
+            // location.href = "/index";
+            // this.$router.push("index"); //如果用户登录后到个人中心页又返回登录页，这样不好
+            this.$router.replace({ path: "/index" });
           }, 2000);
         } else {
           // alert("用户名不存在或密码错误");
