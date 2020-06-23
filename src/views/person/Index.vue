@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="person" v-if="userData">
+    <div class="person" v-if="userData" @click="editClick">
       <img
         v-if="userData.head_img"
         :src="'http://localhost:3000'+userData.head_img"
@@ -16,8 +16,8 @@
       </div>
       <div class="iconfont iconjiantou1"></div>
     </div>
-    <navBar textNavBarL="我的关注" textNavBarM="关注的用户" />
-    <navBar textNavBarL="我的跟帖" textNavBarM="跟帖/回复" />
+    <navBar textNavBarL="我的关注" textNavBarM="关注的用户" @clicked="attention" />
+    <navBar textNavBarL="我的跟帖" textNavBarM="跟帖/回复" @clicked="comment" />
     <navBar textNavBarL="我的收藏" textNavBarM="文章/视频" />
     <navBar textNavBarL="退出" @clicked="logout" />
   </div>
@@ -35,6 +35,15 @@ export default {
     };
   },
   methods: {
+    editClick() {
+      this.$router.push("edit");
+    },
+    attention() {
+      this.$router.push("attent");
+    },
+    comment() {
+      this.$router.push("comment");
+    },
     logout() {
       console.log("父组件接收到子组件的触发事件了");
       localStorage.removeItem("token");
@@ -67,20 +76,20 @@ export default {
 .person {
   display: flex;
   align-items: center;
-  padding: 24px;
-  border-bottom: 4px solid #ccc;
+  padding: 6.67vw;
+  border-bottom: 1px solid #ccc;
   .touxian {
-    width: 70px;
-    height: 70px;
+    width: 19.44vw;
+    height: 19.44vw;
     border-radius: 50%;
   }
   .decs {
     flex: 1;
-    padding-left: 10px;
-    font-size: 14px;
+    padding-left: 2.78vw;
+    font-size: 3.89vw;
     color: #333;
     .time {
-      margin-top: 5px;
+      margin-top: 1.39vw;
       color: #ccc;
     }
   }
