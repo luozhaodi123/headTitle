@@ -1,9 +1,10 @@
 <template>
+  <!-- :src="'http://localhost:3000'+userData.head_img" -->
   <div>
     <div class="person" v-if="userData" @click="editClick">
       <img
         v-if="userData.head_img"
-        :src="'http://localhost:3000'+userData.head_img"
+        :src="this.$axios.defaults.baseURL+userData.head_img"
         class="touxian"
         alt
       />
@@ -19,7 +20,7 @@
     <navBar textNavBarL="我的关注" textNavBarM="关注的用户" @clicked="attention" />
     <navBar textNavBarL="我的跟帖" textNavBarM="跟帖/回复" @clicked="comment" />
     <navBar textNavBarL="我的收藏" textNavBarM="文章/视频" />
-    <navBar textNavBarL="退出" @clicked="logout" />
+    <navBar textNavBarL="退出" textNavBarM="注销用户" @clicked="logout" />
   </div>
 </template>
 
@@ -56,7 +57,8 @@ export default {
   },
   mounted() {
     this.$axios({
-      url: "http://localhost:3000/user/" + localStorage.getItem("userId"),
+      // url: "http://localhost:3000/user/" + localStorage.getItem("userId"),
+      url: "/user/" + localStorage.getItem("userId"),
       method: "get",
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token")

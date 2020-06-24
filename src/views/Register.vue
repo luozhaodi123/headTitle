@@ -67,7 +67,8 @@ export default {
         return;
       }
       this.$axios({
-        url: "http://localhost:3000/register",
+        // url: "http://localhost:3000/register",
+        url: "/register",
         method: "post",
         data: {
           username: this.userName,

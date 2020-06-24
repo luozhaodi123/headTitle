@@ -14,6 +14,9 @@ import axios from 'axios'
 //把axios绑定在vue的原型上
 Vue.prototype.$axios = axios
 
+// 设置全局的axios默认的基准路径
+axios.defaults.baseURL = "http://localhost:3000"
+
 Vue.config.productionTip = false
 
 new Vue({
