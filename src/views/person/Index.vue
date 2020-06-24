@@ -47,6 +47,7 @@ export default {
     logout() {
       console.log("父组件接收到子组件的触发事件了");
       localStorage.removeItem("token");
+      localStorage.removeItem("userId");
       this.$toast("已退出，返回登录页");
       setTimeout(() => {
         this.$router.replace({ path: "/login" });
@@ -65,6 +66,10 @@ export default {
       const { message, data } = res.data;
       if (message == "获取成功") {
         this.userData = data;
+      } else if (res.data.statusCode == 401) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("userId");
+        this.$router.replace("login");
       }
       // console.log(this.userData);
     });
@@ -77,7 +82,7 @@ export default {
   display: flex;
   align-items: center;
   padding: 6.67vw;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 4px solid #ccc;
   .touxian {
     width: 19.44vw;
     height: 19.44vw;

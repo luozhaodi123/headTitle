@@ -4,6 +4,7 @@
       <div class="head">
         <div class="iconfont iconjiantou2" @click="backPerson"></div>
         <div class="text">编辑资料</div>
+        <div class="saveText">保存</div>
       </div>
       <img
         v-if="userData.head_img"
@@ -68,32 +69,35 @@ export default {
 
 <style lang="less" scoped>
 .edit {
-  padding: 20px 24px 0;
+  padding: 5.56vw 6.67vw 0;
   .head {
     display: flex;
     align-items: center;
     .text {
       flex: 1;
       text-align: center;
-      font-size: 14px;
+      font-size: 3.89vw;
+    }
+    .saveText {
+      font-size: 3.89vw;
     }
   }
   .touxian {
     display: block;
-    width: 70px;
-    height: 70px;
+    width: 19.44vw;
+    height: 19.44vw;
     border-radius: 50%;
-    margin: 10px auto;
+    margin: 2.78vw auto;
   }
   #InputFile {
-    font-size: 12px;
+    font-size: 3.33vw;
     padding: 0 25%;
     display: none;
   }
   .submitImg {
     display: block;
-    width: 30px;
-    height: 30px;
+    width: 8.33vw;
+    height: 8.33vw;
     margin: 0 auto;
   }
 }
