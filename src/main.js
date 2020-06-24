@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 
 // 1、导入vant-ui组件库
-import Vant from 'vant'
+import Vant, { Toast } from 'vant'
 // 2、引入的组件的css文件
 import 'vant/lib/index.css'
 // 3、注册vant-ui组件库
@@ -16,6 +16,19 @@ Vue.prototype.$axios = axios
 
 // 设置全局的axios默认的基准路径
 axios.defaults.baseURL = "http://localhost:3000"
+
+// 设置axios拦截器
+axios.interceptors.response.use(res => {
+  // console.log(res.data);
+  const { message, statusCode } = res.data
+  if (statusCode && statusCode == 401) {
+    localStorage.removeItem("token")
+    localStorage.removeItem("userId")
+    Toast.fail(message)
+    router.replace("login")
+  }
+  return res
+})
 
 Vue.config.productionTip = false
 

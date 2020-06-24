@@ -64,7 +64,7 @@ export default {
         Authorization: "Bearer " + localStorage.getItem("token")
       }
     }).then(res => {
-      console.log(res.data);
+      // console.log(res.data);
       const { message, data } = res.data;
       if (message == "获取成功") {
         this.userData = data;
