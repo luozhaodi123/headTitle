@@ -1,21 +1,25 @@
 <template>
-  <div class="bar">
-    <div class="img">
-      <img src="@/assets/logo.png" class="touxian" alt />
+  <div v-if="data">
+    <div class="bar" v-for="(item,index) in data" :key="index">
+      <div class="img">
+        <img v-if="item.head_img" :src="$axios.defaults.baseURL+item.head_img" class="touxian" alt />
+        <img v-else src="@/assets/logo.png" class="touxian" alt />
+      </div>
+      <div class="desc">
+        <div class="title">{{item.nickname}}</div>
+        <div class="time">{{item.create_date.split("T")[0]}}</div>
+      </div>
+      <div class="cancel" @click="handleClick(item.id)">取消关注</div>
     </div>
-    <div class="desc">
-      <div class="title">火星新闻播报</div>
-      <div class="time">2019-10-10</div>
-    </div>
-    <div class="cancel" @click="handleClick(1)">取消关注</div>
   </div>
 </template>
 
 <script>
 export default {
+  props: ["data"],
   methods: {
     handleClick(id) {
-      this.$emit("clicked", id);
+      this.$emit("cancel", id);
     }
   }
 };
