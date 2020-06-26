@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div class="attent">
-      <headBar textHead="我的关注" @clicked="goback" />
-    </div>
+    <headBar textHead="我的关注" @clicked="goback" />
     <nBarAttent :data="attantData" @cancel="cancelAttent" />
   </div>
 </template>
@@ -66,7 +64,4 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.attent {
-  padding: 20px 24px;
-}
 </style>

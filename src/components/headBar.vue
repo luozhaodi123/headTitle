@@ -20,6 +20,7 @@ export default {
 .head {
   display: flex;
   align-items: center;
+  padding: 20px 24px;
   .text {
     flex: 1;
     text-align: center;
