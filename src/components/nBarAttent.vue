@@ -1,16 +1,24 @@
 <template>
-  <div v-if="data">
-    <div class="bar" v-for="(item,index) in data" :key="index">
-      <div class="img">
-        <img v-if="item.head_img" :src="$axios.defaults.baseURL+item.head_img" class="touxian" alt />
-        <img v-else src="@/assets/logo.png" class="touxian" alt />
+  <div>
+    <div v-if="data&&data.length!=0">
+      <div class="bar" v-for="(item,index) in data" :key="index">
+        <div class="img">
+          <img
+            v-if="item.head_img"
+            :src="$axios.defaults.baseURL+item.head_img"
+            class="touxian"
+            alt
+          />
+          <img v-else src="@/assets/logo.png" class="touxian" alt />
+        </div>
+        <div class="desc">
+          <div class="title">{{item.nickname}}</div>
+          <div class="time">{{item.create_date.split("T")[0]}}</div>
+        </div>
+        <div class="cancel" @click="handleClick(item.id)">取消关注</div>
       </div>
-      <div class="desc">
-        <div class="title">{{item.nickname}}</div>
-        <div class="time">{{item.create_date.split("T")[0]}}</div>
-      </div>
-      <div class="cancel" @click="handleClick(item.id)">取消关注</div>
     </div>
+    <div v-else class="tip">暂时还没有关注的哟</div>
   </div>
 </template>
 
@@ -29,36 +37,42 @@ export default {
 .bar {
   display: flex;
   align-items: center;
-  padding: 20px 24px;
+  padding: 5.56vw 6.67vw;
   border-bottom: 1px solid #ccc;
   .img {
-    width: 40px;
-    height: 40px;
+    width: 11.11vw;
+    height: 11.11vw;
     border-radius: 50%;
     background-color: #ccc;
   }
   .touxian {
-    width: 40px;
-    height: 40px;
+    width: 11.11vw;
+    height: 11.11vw;
     border-radius: 50%;
   }
   .desc {
     flex: 1;
-    padding-left: 20px;
+    padding-left: 5.56vw;
     .title {
-      font-size: 16px;
+      font-size: 4.44vw;
       color: #333;
     }
     .time {
-      font-size: 14px;
+      font-size: 3.89vw;
       color: #ccc;
     }
   }
   .cancel {
-    padding: 5px 10px;
+    padding: 1.39vw 2.78vw;
     background-color: #ddd;
-    font-size: 12px;
-    border-radius: 15px;
+    font-size: 3.33vw;
+    border-radius: 4.17vw;
   }
+}
+.tip {
+  height: 13.89vw;
+  line-height: 13.89vw;
+  text-align: center;
+  font-size: 5vw;
 }
 </style>

@@ -155,12 +155,12 @@ export default {
       width: 19.44vw;
       height: 19.44vw;
       border-radius: 50%;
-      margin: 10px 0;
+      margin: 2.78vw 0;
     }
     .van-uploader {
       position: absolute;
-      width: 70px;
-      height: 70px;
+      width: 19.44vw;
+      height: 19.44vw;
       border-radius: 50%;
       opacity: 0;
     }

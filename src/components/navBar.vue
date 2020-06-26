@@ -22,17 +22,17 @@ export default {
 .bar {
   display: flex;
   align-items: center;
-  padding: 20px 24px 20px 0;
-  margin-left: 24px;
-  font-size: 14px;
-  border-bottom: 1px solid #ccc;
+  padding: 5.56vw 6.67vw 5.56vw 0;
+  margin-left: 6.67vw;
+  font-size: 3.89vw;
+  border-bottom: 0.28vw solid #ccc;
   .bar-l {
     color: #333;
   }
   .bar-m {
     flex: 1;
     text-align: right;
-    padding-right: 5px;
+    padding-right: 1.39vw;
     color: #ccc;
   }
 }

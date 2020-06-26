@@ -82,9 +82,9 @@ export default {
           localStorage.setItem("token", data.token);
           localStorage.setItem("userId", data.user.id);
           setTimeout(() => {
-            // location.href = "/index";
-            // this.$router.push("index"); //如果用户登录后到个人中心页又返回登录页，这样不好
-            this.$router.replace({ path: "/index" });
+            // location.href = "/person";
+            // this.$router.push("person"); //如果用户登录后到个人中心页又返回登录页，这样不好
+            this.$router.replace({ path: "/person" });
           }, 2000);
         } else {
           // alert("用户名不存在或密码错误");
@@ -123,8 +123,8 @@ export default {
   }
   .tips {
     text-align: center;
-    line-height: 40px;
-    margin-top: 20px;
+    line-height: 11.11vw;
+    margin-top: 5.56vw;
     color: skyblue;
   }
 }
