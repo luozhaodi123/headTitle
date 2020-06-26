@@ -1,8 +1,7 @@
 <template>
   <div>
     <div class="attent">
-      <div class="iconfont iconjiantou2" @click="backPerson"></div>
-      <div class="text">我的关注</div>
+      <headBar textHead="我的关注" @clicked="goback" />
     </div>
     <nBarAttent @clicked="cancel" />
     <nBarAttent @clicked="cancel" />
@@ -11,19 +10,24 @@
 </template>
 
 <script>
+import headBar from "@/components/headBar";
 import nBarAttent from "@/components/nBarAttent";
 export default {
   components: {
+    headBar,
     nBarAttent
   },
   methods: {
+    goback() {
+      this.$router.back();
+    },
     attentEvent() {
       this.$axios({
         url: "http://localhost:3000/user_follows",
-        method: "get",
-        headers: {
+        method: "get"
+        /* headers: {
           Authorization: "Bearer " + localStorage.getItem("token")
-        }
+        } */
       }).then(res => {
         console.log(res.data);
       });
@@ -55,13 +59,6 @@ export default {
 
 <style lang="less" scoped>
 .attent {
-  display: flex;
-  align-items: center;
   padding: 20px 24px;
-  .text {
-    flex: 1;
-    font-size: 14px;
-    text-align: center;
-  }
 }
 </style>

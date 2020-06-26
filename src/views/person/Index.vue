@@ -59,19 +59,15 @@ export default {
     this.$axios({
       // url: "http://localhost:3000/user/" + localStorage.getItem("userId"),
       url: "/user/" + localStorage.getItem("userId"),
-      method: "get",
-      headers: {
+      method: "get"
+      /* headers: {
         Authorization: "Bearer " + localStorage.getItem("token")
-      }
+      } */
     }).then(res => {
       // console.log(res.data);
       const { message, data } = res.data;
       if (message == "获取成功") {
         this.userData = data;
-      } else if (res.data.statusCode == 401) {
-        localStorage.removeItem("token");
-        localStorage.removeItem("userId");
-        this.$router.replace("login");
       }
       // console.log(this.userData);
     });
