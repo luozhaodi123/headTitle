@@ -33,7 +33,7 @@ export default {
   height: 13.89vw;
   padding: 0 4.17vw;
   box-sizing: border-box;
-  background-color: #ff0000;
+  background-color: #f24e4d;
   color: #fff;
   .iconnew {
     font-size: 15vw;

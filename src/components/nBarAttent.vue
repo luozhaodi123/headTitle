@@ -74,5 +74,6 @@ export default {
   line-height: 13.89vw;
   text-align: center;
   font-size: 5vw;
+  color: #f24e4d;
 }
 </style>

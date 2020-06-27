@@ -22,10 +22,10 @@ export default {
 .bar {
   display: flex;
   align-items: center;
-  padding: 5.56vw 6.67vw 5.56vw 0;
-  margin-left: 6.67vw;
+  padding: 5.56vw 0 5.56vw 0;
+  margin: 0 6.67vw;
   font-size: 3.89vw;
-  border-bottom: 0.28vw solid #ccc;
+  border-bottom: 1px solid #ccc;
   .bar-l {
     color: #333;
   }

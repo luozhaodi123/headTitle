@@ -42,13 +42,14 @@ export default {
 input {
   width: 74.44vw;
   height: 10vw;
-  border: 1px solid #ccc;
-  border-radius: 5vw;
+  border: 0;
+  border-bottom: 1px solid #ccc;
+  // border-radius: 5vw;
   margin: 1.39vw 0;
   padding-left: 2.78vw;
   outline: none;
 }
 input.error {
-  border-color: red;
+  border-color: #f24e4d;
 }
 </style>

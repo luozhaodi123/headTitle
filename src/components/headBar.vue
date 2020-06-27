@@ -20,7 +20,9 @@ export default {
 .head {
   display: flex;
   align-items: center;
-  padding: 5.56vw 6.67vw;
+  padding: 5.4vw 6.67vw;
+  background-color: #f24e4d;
+  color: #fff;
   .text {
     flex: 1;
     text-align: center;

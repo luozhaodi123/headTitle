@@ -22,7 +22,7 @@ export default {
   height: 13.33vw;
   border: 0;
   font-size: 5vw;
-  background-color: #cc3300;
+  background-color: #f24e4d;
   color: #fff;
   margin-top: 8.33vw;
   border-radius: 6.67vw;

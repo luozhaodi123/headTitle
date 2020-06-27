@@ -80,7 +80,8 @@ export default {
   display: flex;
   align-items: center;
   padding: 6.67vw;
-  border-bottom: 4px solid #ccc;
+  border-bottom: 4px solid #ddd;
+  background-color: #f24e4d;
   .touxian {
     width: 19.44vw;
     height: 19.44vw;
@@ -90,11 +91,14 @@ export default {
     flex: 1;
     padding-left: 2.78vw;
     font-size: 3.89vw;
-    color: #333;
+    color: #fff;
     .time {
       margin-top: 1.39vw;
-      color: #ccc;
+      color: #fff;
     }
+  }
+  .iconjiantou1 {
+    color: #fff;
   }
   .iconxingbienv {
     color: pink;

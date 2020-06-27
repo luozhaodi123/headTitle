@@ -3,8 +3,8 @@
     <div class="register">
       <div class="iconfont iconicon-test close" @click="closeRegister"></div>
       <div class="iconfont iconnew"></div>
-      <form action>
-        <label class="text">用户:</label>
+      <div class="user layout">
+        <img src="@/assets/user.png" alt />
         <InputDom
           textType="text"
           @InputVal="inputUser"
@@ -12,9 +12,13 @@
           :rule="ruleUser"
           errMsg="请输入正确的手机号"
         ></InputDom>
-        <label class="text">昵称:</label>
+      </div>
+      <div class="nick layout">
+        <img src="@/assets/nickname.png" alt />
         <InputDom textType="text" @InputVal="inputNickName" textPlaceholder="昵称"></InputDom>
-        <label for class="text">密码:</label>
+      </div>
+      <div class="pwd layout">
+        <img src="@/assets/pwd.png" alt />
         <InputDom
           textType="password"
           @InputVal="inputPwd"
@@ -22,8 +26,7 @@
           :rule="rulePwd"
           errMsg="请输入3到9位的密码"
         ></InputDom>
-      </form>
-
+      </div>
       <btnDom btnText="注册" @clickBtn="register"></btnDom>
     </div>
   </div>
@@ -114,14 +117,16 @@ export default {
   .iconnew {
     text-align: center;
     font-size: 35vw;
-    color: #cc3300;
+    color: #f24e4d;
   }
-  .text {
-    display: inline-block;
-    width: 11.11vw;
-    height: 10vw;
-    font-size: 4.44vw;
-    line-height: 10vw;
+  .layout {
+    display: flex;
+    align-items: center;
+    img {
+      width: 25px;
+      height: 25px;
+      margin-right: 5px;
+    }
   }
 }
 </style>

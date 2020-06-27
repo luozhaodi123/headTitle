@@ -144,7 +144,6 @@ export default {
 
 <style lang="less" scoped>
 .edit {
-  padding: 5.56vw 6.67vw 0;
   .imgbox {
     position: relative;
     display: flex;

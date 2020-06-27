@@ -3,8 +3,8 @@
     <div class="login">
       <div class="iconfont iconicon-test" @click="close"></div>
       <div class="iconfont iconnew"></div>
-      <form action>
-        <label class="text">用户:</label>
+      <div class="user">
+        <img src="@/assets/user.png" alt />
         <InputDom
           textType="text"
           @InputVal="inputUser"
@@ -12,8 +12,9 @@
           :rule="ruleUser"
           errMsg="请输入正确的手机号"
         ></InputDom>
-        <br />
-        <label class="text">密码:</label>
+      </div>
+      <div class="user pwd">
+        <img src="@/assets/pwd.png" alt />
         <InputDom
           textType="password"
           @InputVal="inputPwd"
@@ -21,8 +22,7 @@
           :rule="rulePwd"
           errMsg="请输入3到9位的密码"
         ></InputDom>
-        <br />
-      </form>
+      </div>
       <btnDom btnText="登录" @clickBtn="login"></btnDom>
       <div class="tips">
         <router-link to="/register">没有账号？跳转到注册页面</router-link>
@@ -117,15 +117,18 @@ export default {
   .iconnew {
     text-align: center;
     font-size: 35vw;
-    color: #cc3300;
+    color: #f24e4d;
   }
-  .text {
-    display: inline-block;
-    width: 11.11vw;
-    height: 10vw;
-    font-size: 4.44vw;
-    line-height: 10vw;
+  .user {
+    display: flex;
+    align-items: center;
+    img {
+      width: 25px;
+      height: 25px;
+      margin-right: 5px;
+    }
   }
+
   .tips {
     text-align: center;
     line-height: 11.11vw;
