@@ -2,10 +2,10 @@
   <div>
     <div class="head">
       <div class="iconfont iconnew"></div>
-      <div class="search">
+      <div class="search" @click="handleClickSearch">
         <div class="iconfont iconsearch">搜索新闻</div>
       </div>
-      <div class="iconfont iconwode" @click="handleClick"></div>
+      <div class="iconfont iconwode" @click="handleClickLogin"></div>
     </div>
   </div>
 </template>
@@ -13,8 +13,11 @@
 <script>
 export default {
   methods: {
-    handleClick() {
-      this.$emit("clicked");
+    handleClickLogin() {
+      this.$emit("clickedLogin");
+    },
+    handleClickSearch() {
+      this.$emit("clickedSearch");
     }
   }
 };
@@ -22,14 +25,18 @@ export default {
 
 <style lang="less" scoped>
 .head {
+  position: fixed;
+  z-index: 999;
   display: flex;
   align-items: center;
+  width: 100%;
   height: 13.89vw;
   padding: 0 4.17vw;
+  box-sizing: border-box;
   background-color: #ff0000;
+  color: #fff;
   .iconnew {
     font-size: 15vw;
-    color: #fff;
   }
   .search {
     flex: 1;
@@ -40,11 +47,10 @@ export default {
     margin: 0 4.17vw 0 1.39vw;
     border-radius: 6.94vw;
     font-size: 5vw;
-    color: #fff;
   }
   .iconwode {
     font-size: 6.94vw;
-    color: #fff;
+    opacity: 0.6;
   }
 }
 </style>

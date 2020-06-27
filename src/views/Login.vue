@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="login">
-      <div class="iconfont iconicon-test"></div>
+      <div class="iconfont iconicon-test" @click="close"></div>
       <div class="iconfont iconnew"></div>
       <form action>
         <label class="text">用户:</label>
@@ -48,6 +48,9 @@ export default {
     btnDom
   },
   methods: {
+    close() {
+      this.$router.back();
+    },
     login() {
       // 在发送axios请求前，对数据进行校验
       if (!this.userName || !this.passWord) {
@@ -107,6 +110,8 @@ export default {
   padding: 5.56vw;
   box-sizing: border-box;
   .iconicon-test {
+    width: 27px;
+    height: 27px;
     font-size: 7.5vw;
   }
   .iconnew {
