@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="data&&data.length!=0">
-      <div class="bar" v-for="(item,index) in data" :key="index">
+      <div class="bar" v-for="(item,index) in data" :key="item.id">
         <div class="img">
           <img
             v-if="item.head_img"
@@ -15,7 +15,8 @@
           <div class="title">{{item.nickname}}</div>
           <div class="time">{{item.create_date.split("T")[0]}}</div>
         </div>
-        <div class="cancel" @click="handleClick(item.id)">取消关注</div>
+        <div class="cancel" v-if="data[index].fullow" @click="unfullow({id:item.id,index})">取消关注</div>
+        <div class="confirm" v-else @click="fullow({id:item.id,index})">关注</div>
       </div>
     </div>
     <div v-else class="tip">暂时还没有关注的哟</div>
@@ -26,8 +27,11 @@
 export default {
   props: ["data"],
   methods: {
-    handleClick(id) {
-      this.$emit("cancel", id);
+    unfullow(obj) {
+      this.$emit("cancel", obj);
+    },
+    fullow(obj) {
+      this.$emit("confirm", obj);
     }
   }
 };
@@ -67,6 +71,16 @@ export default {
     background-color: #ddd;
     font-size: 3.33vw;
     border-radius: 4.17vw;
+  }
+  .confirm {
+    width: 18.89vw;
+    height: 7.22vw;
+    line-height: 7.22vw;
+    text-align: center;
+    font-size: 3.33vw;
+    border-radius: 4.17vw;
+    background-color: #f24e4d;
+    color: #fff;
   }
 }
 .tip {

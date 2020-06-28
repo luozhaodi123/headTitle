@@ -8,10 +8,15 @@ import Attent from '../views/person/Attent.vue'
 import Comment from '../views/person/Comment.vue'
 import Index from '@/views/Index.vue'
 import Search from '@/views/Search.vue'
+import Test from "@/views/Test.vue"
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/test',
+    component: Test
+  },
   {
     path: '/',
     component: Index
