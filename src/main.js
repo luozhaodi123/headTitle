@@ -3,11 +3,11 @@ import App from './App.vue'
 import router from './router'
 
 // 1、导入vant-ui组件库
-import Vant, { Toast, Dialog, ActionSheet, Uploader, Tab, Tabs } from 'vant'
+import Vant, { Toast, Dialog, ActionSheet, Uploader, Tab, Tabs, list } from 'vant'
 // 2、引入的组件的css文件
 import 'vant/lib/index.css'
 // 3、注册vant-ui组件库
-Vue.use(Vant, Dialog, ActionSheet, Uploader, Tab, Tabs)
+Vue.use(Vant, Dialog, ActionSheet, Uploader, Tab, Tabs, list)
 // Vue.use(Dialog)
 // Vue.use(ActionSheet)
 

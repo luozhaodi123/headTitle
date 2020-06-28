@@ -3,7 +3,22 @@
     <homeHead @clickedLogin="$router.push('person')" @clickedSearch="$router.push('search')" />
     <van-tabs v-model="active">
       <van-tab v-for="category in categoryList" :key="category.id" :title="category.name">
-        <newsList :postList="category.article" />
+        <!-- 使用list组件将文章包裹起来 -->
+        <!-- 当页面拉到底的时候，就会触发一个事件load -->
+        <!-- 
+          loading是否在加载中，如果为false，那么拉到底就会发出下一页的请求，自动变为true然后等待
+          finished是否已经全部加载完毕，如果为true，那么就会消失结束文字，再也不会发生下一页的请求
+          :immediate-check="false" 表示禁用vant组件第一次进入页面自动加载的功能
+        -->
+        <van-list
+          v-model="category.loading"
+          :finished="category.finished"
+          @load="loadMoreArticle"
+          :immediate-check="false"
+          finished-text="没有更多了"
+        >
+          <newsList :postList="category.article" />
+        </van-list>
       </van-tab>
     </van-tabs>
   </div>
@@ -21,7 +36,6 @@ export default {
     return {
       active: 0,
       categoryList: null
-      // postList: []
     };
   },
   watch: {
@@ -58,7 +72,11 @@ export default {
         const newData = data.map(item => {
           return {
             ...item,
-            article: []
+            article: [],
+            pageIndex: 1,
+            pageSize: 5,
+            loading: false,
+            finished: false
           };
         });
         this.categoryList = newData;
@@ -67,21 +85,43 @@ export default {
         this.getPost();
       });
     },
+    loadMoreArticle() {
+      console.log("进入了加载下一页");
+      const currentCategory = this.categoryList[this.active];
+      currentCategory.pageIndex += 1;
+      this.getPost();
+    },
     // 获取文章列表
     getPost() {
-      // 发送请求之前，对
+      const currentCategory = this.categoryList[this.active];
       // 发送请求
       this.$axios({
         url: "/post",
         params: {
-          category: this.categoryId
+          category: this.categoryId,
+          pageIndex: currentCategory.pageIndex, //当前页数
+          pageSize: currentCategory.pageSize //当前页的文章数
         }
       }).then(res => {
-        // console.log(res.data.data);
+        console.log(res.data.data);
         // this.postList = res.data.data;
         // 当活动tab是把当前的文章追加对应的tab栏目的article数组中
-        const currentCategory = this.categoryList[this.active];
-        currentCategory.article = res.data.data;
+        // currentCategory.article = res.data.data;
+
+        // 以前我们获取文章列表之后，是直接将之前的数组替换掉，其实我们需要的是将下一页跟上一页的拼接起来
+        currentCategory.article = [
+          ...currentCategory.article,
+          ...res.data.data
+        ];
+
+        //这里加载完文章数据之后，需要手动将当前栏目的加载状态改为false，也就是没有正在加载
+        // 这样才能在下一次的拉到底的时候重新触发加载下一页
+        currentCategory.loading = false;
+
+        //最后如果发现数据已经到了头，需要告诉组件已经完毕，禁止再次发生请求
+        if (res.data.data.length < currentCategory.pageSize) {
+          currentCategory.finished = true;
+        }
       });
     }
   },
