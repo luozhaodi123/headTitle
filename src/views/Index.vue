@@ -2,8 +2,9 @@
   <div>
     <homeHead @clickedLogin="$router.push('person')" @clickedSearch="$router.push('search')" />
     <van-tabs v-model="active">
-      <van-tab v-for="item in tabData" :key="item.id" :title="item.name"></van-tab>
-      <newsList :postList="postList" />
+      <van-tab v-for="category in categoryList" :key="category.id" :title="category.name">
+        <newsList :postList="category.article" />
+      </van-tab>
     </van-tabs>
   </div>
 </template>
@@ -19,21 +20,26 @@ export default {
   data() {
     return {
       active: 0,
-      tabData: null,
-      postList: []
+      categoryList: null
+      // postList: []
     };
   },
   watch: {
     // 监听tab栏中active活动的对应的栏目，加载对应栏目的内容
     active() {
-      this.getPost();
+      // 活动tab发送请求前，判断categoryList.article这个数组的长度是否已经有数据
+      // 如果有就不发请求，没有就发请求
+      const currentCategory = this.categoryList[this.active];
+      if (currentCategory.article.length == 0) {
+        this.getPost();
+      }
     }
   },
   computed: {
     // 使用属性监听分类栏目的id
     categoryId() {
       // 拿到当前活动分类的Id
-      const currentCategory = this.tabData[this.active];
+      const currentCategory = this.categoryList[this.active];
       return currentCategory.id;
     }
   },
@@ -44,15 +50,26 @@ export default {
         url: "/category",
         method: "get"
       }).then(res => {
-        console.log(res.data);
+        // console.log(res.data);
         const { data } = res.data;
-        this.tabData = data;
+        // this.categoryList = data;
+        // 分栏目管理文章列表
+        // 主要是通过挂上一个空数组用来管理栏目自己的文章
+        const newData = data.map(item => {
+          return {
+            ...item,
+            article: []
+          };
+        });
+        this.categoryList = newData;
+        console.log(this.categoryList);
         //当tab分类栏加载完毕后才发送获取文章列表的请求
         this.getPost();
       });
     },
     // 获取文章列表
     getPost() {
+      // 发送请求之前，对
       // 发送请求
       this.$axios({
         url: "/post",
@@ -60,8 +77,11 @@ export default {
           category: this.categoryId
         }
       }).then(res => {
-        console.log(res.data);
-        this.postList = res.data.data;
+        // console.log(res.data.data);
+        // this.postList = res.data.data;
+        // 当活动tab是把当前的文章追加对应的tab栏目的article数组中
+        const currentCategory = this.categoryList[this.active];
+        currentCategory.article = res.data.data;
       });
     }
   },
