@@ -41,6 +41,17 @@ axios.interceptors.response.use(res => {
   return res
 })
 
+// 全局图片过滤器
+Vue.filter("fixImgUrl", url => {
+  const fullUrlReg = /^http/;
+  // console.log(fullUrlReg.test(url));
+  if (fullUrlReg.test(url)) {
+    return url;
+  } else {
+    return axios.defaults.baseURL + url;
+  }
+})
+
 Vue.config.productionTip = false
 
 new Vue({
