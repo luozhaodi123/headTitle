@@ -1,7 +1,7 @@
 <template>
   <div>
     <homeHead @clickedLogin="$router.push('person')" @clickedSearch="$router.push('search')" />
-    <van-tabs v-model="active">
+    <van-tabs v-model="active" sticky swipeable>
       <van-tab v-for="category in categoryList" :key="category.id" :title="category.name">
         <!-- 使用list组件将文章包裹起来 -->
         <!-- 当页面拉到底的时候，就会触发一个事件load -->
@@ -17,7 +17,7 @@
           :immediate-check="false"
           finished-text="没有更多了"
         >
-          <newsList :postList="category.article" />
+          <newsList :postList="category.article" @clicked="toArticleDetail" />
         </van-list>
       </van-tab>
     </van-tabs>
@@ -80,7 +80,7 @@ export default {
           };
         });
         this.categoryList = newData;
-        console.log(this.categoryList);
+        // console.log(this.categoryList);
         //当tab分类栏加载完毕后才发送获取文章列表的请求
         this.getPost();
       });
@@ -123,6 +123,10 @@ export default {
           currentCategory.finished = true;
         }
       });
+    },
+    // 跳转到文章详情页
+    toArticleDetail(id) {
+      this.$router.push("/articleDetail/" + id);
     }
   },
   mounted() {
@@ -135,13 +139,5 @@ export default {
 /deep/.van-tab__text {
   font-size: 4.17vw;
   color: #333;
-}
-/deep/.van-tabs__wrap {
-  position: fixed;
-  z-index: 1000;
-  margin-top: 13.89vw;
-}
-/deep/.van-tabs__content {
-  padding-top: 26.11vw;
 }
 </style>

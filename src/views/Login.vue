@@ -87,7 +87,7 @@ export default {
           setTimeout(() => {
             // location.href = "/person";
             // this.$router.push("person"); //如果用户登录后到个人中心页又返回登录页，这样不好
-            this.$router.replace({ path: "/person" });
+            this.$router.replace({ path: "/" });
           }, 2000);
         } else {
           // alert("用户名不存在或密码错误");

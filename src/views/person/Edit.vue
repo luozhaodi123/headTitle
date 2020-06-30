@@ -13,9 +13,28 @@
         <van-uploader :after-read="afterRead" />
       </div>
     </div>
-    <navBar textNavBarL="昵称" :textNavBarM="userData.nickname" @clicked="showNick=true" />
-    <navBar textNavBarL="密码" textNavBarM="*****" @clicked="showPwd=true" />
-    <navBar textNavBarL="性别" :textNavBarM="userData.gender==1?'男':'女'" @clicked="showGender=true" />
+    <div class="list">
+      <van-icon name="user-o" />
+      <navBar
+        class="itemList"
+        textNavBarL="昵称"
+        :textNavBarM="userData.nickname"
+        @clicked="showNick=true"
+      />
+    </div>
+    <div class="list">
+      <van-icon name="goods-collect-o" />
+      <navBar class="itemList" textNavBarL="密码" textNavBarM="*****" @clicked="showPwd=true" />
+    </div>
+    <div class="list">
+      <van-icon name="smile-o" />
+      <navBar
+        class="itemList"
+        textNavBarL="性别"
+        :textNavBarM="userData.gender==1?'男':'女'"
+        @clicked="showGender=true"
+      />
+    </div>
 
     <!-- 弹出输入框组件 -->
     <van-dialog
@@ -163,6 +182,19 @@ export default {
       border-radius: 50%;
       opacity: 0;
     }
+  }
+}
+.list {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  border-bottom: 1px solid #ccc;
+  .itemList {
+    flex: 1;
+  }
+  .van-icon {
+    margin-right: 8px;
+    font-size: 20px;
   }
 }
 </style>

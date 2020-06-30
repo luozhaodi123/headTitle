@@ -1,6 +1,7 @@
 <template>
   <!-- :src="'http://localhost:3000'+userData.head_img" -->
   <div>
+    <TopBar textHead="个人中心" @clicked="$router.back()" />
     <div class="person" v-if="userData" @click="editClick">
       <img
         v-if="userData.head_img"
@@ -17,18 +18,31 @@
       </div>
       <div class="iconfont iconjiantou1"></div>
     </div>
-    <navBar textNavBarL="我的关注" textNavBarM="关注的用户" @clicked="attention" />
-    <navBar textNavBarL="我的跟帖" textNavBarM="跟帖/回复" @clicked="comment" />
-    <navBar textNavBarL="我的收藏" textNavBarM="文章/视频" />
-    <navBar textNavBarL="退出" textNavBarM="注销用户" @clicked="logout" />
+    <div class="list">
+      <van-icon name="like-o" />
+      <navBar class="itemList" textNavBarL="我的关注" textNavBarM="关注的用户" @clicked="attention" />
+    </div>
+    <div class="list">
+      <van-icon name="comment-o" />
+      <navBar class="itemList" textNavBarL="我的跟帖" textNavBarM="跟帖/回复" @clicked="comment" />
+    </div>
+    <div class="list">
+      <van-icon name="star-o" />
+      <navBar class="itemList" textNavBarL="我的收藏" textNavBarM="文章/视频" @clicked="star" />
+    </div>
+    <btnDom btnText="退出登录" @clickBtn="logout" />
   </div>
 </template>
 
 <script>
 import navBar from "@/components/navBar";
+import TopBar from "@/components/headBar";
+import btnDom from "@/components/btnDom";
 export default {
   components: {
-    navBar
+    navBar,
+    TopBar,
+    btnDom
   },
   data() {
     return {
@@ -45,13 +59,16 @@ export default {
     comment() {
       this.$router.push("comment");
     },
+    star() {
+      this.$router.push("star");
+    },
     logout() {
       console.log("父组件接收到子组件的触发事件了");
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
-      this.$toast("已退出，返回登录页");
+      this.$toast("已退出登录");
       setTimeout(() => {
-        this.$router.replace({ path: "/login" });
+        this.$router.replace({ path: "/" });
       }, 2000);
     }
   },
@@ -81,7 +98,6 @@ export default {
   align-items: center;
   padding: 6.67vw;
   border-bottom: 4px solid #ddd;
-  background-color: #f24e4d;
   .touxian {
     width: 19.44vw;
     height: 19.44vw;
@@ -91,14 +107,14 @@ export default {
     flex: 1;
     padding-left: 2.78vw;
     font-size: 3.89vw;
-    color: #fff;
+    color: #333;
     .time {
       margin-top: 1.39vw;
-      color: #fff;
+      color: #ccc;
     }
   }
   .iconjiantou1 {
-    color: #fff;
+    color: #333;
   }
   .iconxingbienv {
     color: pink;
@@ -106,5 +122,21 @@ export default {
   .iconxingbienan {
     color: skyblue;
   }
+}
+.list {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  border-bottom: 1px solid #ccc;
+  .itemList {
+    flex: 1;
+  }
+  .van-icon {
+    margin-right: 8px;
+    font-size: 20px;
+  }
+}
+.btnWrapper {
+  margin: 0 20px;
 }
 </style>

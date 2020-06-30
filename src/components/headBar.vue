@@ -22,11 +22,11 @@ export default {
   align-items: center;
   padding: 5.4vw 6.67vw;
   background-color: #f24e4d;
+  font-weight: 700;
   color: #fff;
   .text {
     flex: 1;
     text-align: center;
-    font-size: 3.89vw;
   }
 }
 </style>

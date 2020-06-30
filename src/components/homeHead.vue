@@ -25,8 +25,6 @@ export default {
 
 <style lang="less" scoped>
 .head {
-  position: fixed;
-  z-index: 999;
   display: flex;
   align-items: center;
   width: 100%;

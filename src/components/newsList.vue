@@ -2,7 +2,11 @@
   <div>
     <div v-for="post in postList" :key="post.id">
       <!-- 单图片的组件(1<=img<3) 处理没图片的文章-->
-      <div class="singleImg" v-if="post.type==1&&1<=post.cover.length<3">
+      <div
+        class="singleImg"
+        v-if="post.type==1&&1<=post.cover.length<3"
+        @click="handleClick(post.id)"
+      >
         <div class="info">
           <div class="title">{{post.title}}</div>
           <div class="user">
@@ -13,7 +17,7 @@
         <img :src="post.cover[0].url | fixImgUrl" alt class="imgUrl" />
       </div>
       <!-- 多图片的组件(img>=3) -->
-      <div class="moreImg" v-if="post.type==1&&post.cover.length>=3">
+      <div class="moreImg" v-if="post.type==1&&post.cover.length>=3" @click="handleClick(post.id)">
         <div class="title">{{post.title}}</div>
         <div class="imgUrl">
           <img :src="post.cover[0].url | fixImgUrl" alt />
@@ -26,7 +30,7 @@
         </div>
       </div>
       <!-- 视频组件 -->
-      <div class="video" v-if="post.type==2&&post.cover.length>=1">
+      <div class="video" v-if="post.type==2&&post.cover.length>=1" @click="handleClick(post.id)">
         <div class="title">{{post.title}}</div>
         <div class="videoImg">
           <img :src="post.cover[0].url | fixImgUrl" alt class="img" />
@@ -43,7 +47,7 @@
 
 <script>
 export default {
-  props: ["postList"]
+  props: ["postList"],
   // 局部过滤器，主要是处理图片不全的问题
   // 后台发出来的数据，有可能是完整的，也有可能是相对路径
   /* filters: {
@@ -56,6 +60,12 @@ export default {
       }
     }
   } */
+  methods: {
+    handleClick(id) {
+      // console.log(id);
+      this.$emit("clicked", id);
+    }
+  }
 };
 </script>
 

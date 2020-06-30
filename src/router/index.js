@@ -9,6 +9,8 @@ import Comment from '../views/person/Comment.vue'
 import Index from '@/views/Index.vue'
 import Search from '@/views/Search.vue'
 import Test from "@/views/Test.vue"
+import Star from "@/views/person/star.vue"
+import ArticleDetail from "@/views/articleDetail.vue"
 
 Vue.use(VueRouter)
 
@@ -42,6 +44,10 @@ const routes = [
     component: Attent
   },
   {
+    path: '/star',
+    component: Star
+  },
+  {
     path: '/comment',
     component: Comment
   },
@@ -52,6 +58,11 @@ const routes = [
   {
     path: "/search",
     component: Search
+  },
+  {
+    // 设置动态传参的方式
+    path: "/articledetail/:id",
+    component: ArticleDetail
   }
 ]
 
