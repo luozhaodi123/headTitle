@@ -1,7 +1,7 @@
 <template>
   <div>
     <TopBar textHead="我的收藏" @clicked="$router.back()" />
-    <newList :postList="postList" @clicked="toArticleDetail" />
+    <newList :post="list" v-for="list in postList" @clicked="toArticleDetail" :key="list.id" />
   </div>
 </template>
 

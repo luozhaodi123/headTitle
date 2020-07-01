@@ -17,7 +17,13 @@
           :immediate-check="false"
           finished-text="没有更多了"
         >
-          <newsList :postList="category.article" @clicked="toArticleDetail" />
+          <!-- <newsList  :postList="category.article" @clicked="toArticleDetail" /> -->
+          <newsList
+            :post="postList"
+            v-for="postList in category.article"
+            @clicked="toArticleDetail"
+            :key="postList.id"
+          />
         </van-list>
       </van-tab>
     </van-tabs>

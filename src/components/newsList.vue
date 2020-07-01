@@ -1,45 +1,44 @@
 <template>
-  <div>
-    <div v-for="post in postList" :key="post.id">
-      <!-- 单图片的组件(1<=img<3) 处理没图片的文章-->
-      <div
-        class="singleImg"
-        v-if="post.type==1&&1<=post.cover.length<3"
-        @click="handleClick(post.id)"
-      >
-        <div class="info">
-          <div class="title">{{post.title}}</div>
-          <div class="user">
-            <span class="userInfo">{{post.user.nickname}}</span>
-            {{post.comment_length}}跟帖
-          </div>
-        </div>
-        <img :src="post.cover[0].url | fixImgUrl" alt class="imgUrl" />
-      </div>
-      <!-- 多图片的组件(img>=3) -->
-      <div class="moreImg" v-if="post.type==1&&post.cover.length>=3" @click="handleClick(post.id)">
+  <!-- <div v-for="post in postList" :key="post.id"> -->
+  <div v-if="post">
+    <!-- 单图片的组件(1<=img<3) 处理没图片的文章-->
+    <div
+      class="singleImg"
+      v-if="post.type==1&&1<=post.cover.length<3"
+      @click="handleClick(post.id)"
+    >
+      <div class="info">
         <div class="title">{{post.title}}</div>
-        <div class="imgUrl">
-          <img :src="post.cover[0].url | fixImgUrl" alt />
-          <img :src="post.cover[1].url | fixImgUrl" alt />
-          <img :src="post.cover[2].url | fixImgUrl" alt />
-        </div>
         <div class="user">
           <span class="userInfo">{{post.user.nickname}}</span>
-          {{post.comment_length}}跟帖
+          {{commentLength}}跟帖
         </div>
       </div>
-      <!-- 视频组件 -->
-      <div class="video" v-if="post.type==2&&post.cover.length>=1" @click="handleClick(post.id)">
-        <div class="title">{{post.title}}</div>
-        <div class="videoImg">
-          <img :src="post.cover[0].url | fixImgUrl" alt class="img" />
-          <div class="iconfont iconshipin"></div>
-        </div>
-        <div class="user">
-          <span class="userInfo">{{post.user.nickname}}</span>
-          {{post.comment_length}}跟帖
-        </div>
+      <img :src="post.cover[0].url | fixImgUrl" alt class="imgUrl" />
+    </div>
+    <!-- 多图片的组件(img>=3) -->
+    <div class="moreImg" v-if="post.type==1&&post.cover.length>=3" @click="handleClick(post.id)">
+      <div class="title">{{post.title}}</div>
+      <div class="imgUrl">
+        <img :src="post.cover[0].url | fixImgUrl" alt />
+        <img :src="post.cover[1].url | fixImgUrl" alt />
+        <img :src="post.cover[2].url | fixImgUrl" alt />
+      </div>
+      <div class="user">
+        <span class="userInfo">{{post.user.nickname}}</span>
+        {{commentLength}}跟帖
+      </div>
+    </div>
+    <!-- 视频组件 -->
+    <div class="video" v-if="post.type==2&&post.cover.length>=1" @click="handleClick(post.id)">
+      <div class="title">{{post.title}}</div>
+      <div class="videoImg">
+        <img :src="post.cover[0].url | fixImgUrl" alt class="img" />
+        <div class="iconfont iconshipin"></div>
+      </div>
+      <div class="user">
+        <span class="userInfo">{{post.user.nickname}}</span>
+        {{commentLength}}跟帖
       </div>
     </div>
   </div>
@@ -47,7 +46,7 @@
 
 <script>
 export default {
-  props: ["postList"],
+  props: ["post"],
   // 局部过滤器，主要是处理图片不全的问题
   // 后台发出来的数据，有可能是完整的，也有可能是相对路径
   /* filters: {
@@ -64,6 +63,17 @@ export default {
     handleClick(id) {
       // console.log(id);
       this.$emit("clicked", id);
+    }
+  },
+  computed: {
+    commentLength() {
+      if (this.post.comments) {
+        return this.post.comments.length;
+      } else if (this.post.comment_length) {
+        return this.post.comment_length;
+      } else {
+        return 0;
+      }
     }
   }
 };
