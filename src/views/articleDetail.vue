@@ -67,14 +67,41 @@
         <div class="iconfont iconweixin"></div>微信
       </div>
     </div>
+    <!-- 精彩跟帖 -->
+    <div class="comMain">
+      <div class="headTitle">精彩跟帖</div>
+      <div v-if="commentList.length>0">
+        <div class="user" v-for="item in commentList" :key="item.id">
+          <div class="userInfo">
+            <img class="touxian" src="@/assets/logo.png" alt />
+            <div class="info">
+              <div class="nickname">{{item.user.nickname}}</div>
+              <div class="time">2小时前</div>
+            </div>
+            <div class="reply">回复</div>
+          </div>
+          <Comment :comment="item" />
+        </div>
+      </div>
+      <div v-else class="tips">暂时还没有跟帖哦</div>
+    </div>
+    <!-- 更多跟帖 -->
+    <div class="moreComment">
+      <div class="btn" @click="$router.push('/morecom/'+$route.params.id)">更多跟帖</div>
+    </div>
   </div>
 </template>
 
 <script>
+import Comment from "@/components/comment/Index";
 export default {
+  components: {
+    Comment
+  },
   data() {
     return {
-      articleDetail: ""
+      articleDetail: "",
+      commentList: []
     };
   },
   created() {
@@ -83,6 +110,16 @@ export default {
     }).then(res => {
       console.log(res.data);
       this.articleDetail = res.data.data;
+    });
+    // 加载跟帖
+    this.$axios({
+      url: "/post_comment/" + this.$route.params.id
+    }).then(res => {
+      console.log(res.data);
+      if (res.data.data.length >= 3) {
+        res.data.data.length = 3;
+      }
+      this.commentList = res.data.data;
     });
   },
   methods: {
@@ -157,23 +194,23 @@ export default {
 .head {
   display: flex;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 5.56vw;
   .iconjiantou2 {
-    font-size: 15px;
-    margin-right: 5px;
+    font-size: 4.17vw;
+    margin-right: 1.39vw;
   }
   .iconnew {
     flex: 1;
-    font-size: 54px;
+    font-size: 15vw;
   }
   .cancelfullowBtn,
   .fullowBtn {
-    width: 62px;
-    height: 26px;
-    line-height: 26px;
+    width: 17.22vw;
+    height: 7.22vw;
+    line-height: 7.22vw;
     text-align: center;
-    font-size: 12px;
-    border-radius: 13px;
+    font-size: 3.33vw;
+    border-radius: 3.61vw;
     border: 1px solid #ccc;
   }
   .fullowBtn {
@@ -183,24 +220,24 @@ export default {
   }
 }
 .picture {
-  padding: 0 20px;
+  padding: 0 5.56vw;
   .title {
-    font-size: 18px;
+    font-size: 5vw;
     font-weight: 700;
   }
   .info {
     display: flex;
-    font-size: 13px;
+    font-size: 3.61vw;
     align-items: center;
-    padding: 10px 0 25px;
+    padding: 2.78vw 0 6.94vw;
     color: #868686;
     .user {
-      margin-right: 10px;
+      margin-right: 2.78vw;
     }
   }
   .mainContent {
-    line-height: 25px;
-    font-size: 14px;
+    line-height: 6.94vw;
+    font-size: 3.89vw;
     /deep/img {
       max-width: 100%;
       object-fit: cover;
@@ -208,53 +245,53 @@ export default {
   }
 }
 .video {
-  padding: 0 20px;
+  padding: 0 5.56vw;
   .box {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 10px;
+    margin-bottom: 2.78vw;
     .player {
       width: 100%;
     }
     .iconshipin {
       position: absolute;
-      width: 40px;
-      height: 40px;
-      line-height: 40px;
+      width: 11.11vw;
+      height: 11.11vw;
+      line-height: 11.11vw;
       text-align: center;
       border-radius: 50%;
       background-color: rgba(0, 0, 0, 0.5);
       color: #fff;
-      font-size: 30px;
+      font-size: 8.33vw;
     }
   }
   .info {
     display: flex;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 4.44vw;
     .user {
       flex: 1;
       display: flex;
       align-items: center;
-      font-size: 13px;
+      font-size: 3.61vw;
       color: #868686;
       img {
-        width: 25px;
-        height: 25px;
+        width: 6.94vw;
+        height: 6.94vw;
         border-radius: 50%;
-        margin-right: 5px;
+        margin-right: 1.39vw;
       }
     }
     .cancelfullowBtn,
     .fullowBtn {
-      width: 62px;
-      height: 26px;
-      line-height: 26px;
+      width: 17.22vw;
+      height: 7.22vw;
+      line-height: 7.22vw;
       text-align: center;
-      font-size: 12px;
-      border-radius: 13px;
+      font-size: 3.33vw;
+      border-radius: 3.61vw;
       border: 1px solid #ccc;
     }
     .fullowBtn {
@@ -271,27 +308,85 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding: 30px 20px 20px;
-  border-bottom: 4px solid #ccc;
+  padding: 8.33vw 5.56vw 5.56vw;
+  border-bottom: 1.11vw solid #ccc;
   .dianzan,
   .weixin {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 79px;
-    height: 26px;
-    font-size: 13px;
+    width: 21.94vw;
+    height: 7.22vw;
+    font-size: 3.61vw;
     border: 1px solid #333;
-    border-radius: 13px;
+    border-radius: 3.61vw;
   }
   .iconfont {
-    margin-right: 5px;
+    margin-right: 1.39vw;
     &.iconweixin {
       color: #00c800;
     }
   }
   .colRed {
     color: red;
+  }
+}
+.comMain {
+  .headTitle {
+    padding: 6.94vw 5.56vw 0;
+    text-align: center;
+    font-size: 5vw;
+    color: #333;
+  }
+  .user {
+    padding: 0 5.56vw;
+    margin-bottom: 5.56vw;
+    border-bottom: 1px solid #ccc;
+    .userInfo {
+      display: flex;
+      align-items: center;
+      .touxian {
+        width: 9.72vw;
+        height: 9.72vw;
+        border-radius: 50%;
+      }
+      .info {
+        flex: 1;
+        margin-left: 2.78vw;
+        .nickname {
+          font-size: 3.89vw;
+          color: #333;
+          margin-bottom: 0.83vw;
+        }
+        .time {
+          font-size: 3.33vw;
+          color: #868686;
+        }
+      }
+      .reply {
+        font-size: 3.33vw;
+        color: #868686;
+      }
+    }
+  }
+  .tips {
+    text-align: center;
+    margin: 5.56vw 0;
+    color: #f24e4d;
+  }
+}
+.moreComment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5.56vw;
+  .btn {
+    text-align: center;
+    padding: 2.22vw 11.11vw;
+    border: 1px solid #ccc;
+    font-size: 3.61vw;
+    color: #333;
+    border-radius: 5.56vw;
   }
 }
 </style>
