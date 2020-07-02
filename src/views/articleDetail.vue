@@ -73,54 +73,57 @@
       <div v-if="commentList.length>0">
         <div class="user" v-for="item in commentList" :key="item.id">
           <div class="userInfo">
-            <img class="touxian" src="@/assets/logo.png" alt />
+            <img class="touxian" :src="$axios.defaults.baseURL+item.user.head_img" alt />
             <div class="info">
               <div class="nickname">{{item.user.nickname}}</div>
               <div class="time">2小时前</div>
             </div>
-            <div class="reply">回复</div>
+            <div class="reply" @click="reply({id:item.id,user:item.user.nickname})">回复</div>
           </div>
-          <Comment :comment="item" />
+          <Comment :comment="item" @replyModule="replyModule" />
         </div>
       </div>
-      <div v-else class="tips">暂时还没有跟帖哦</div>
+      <div v-else class="tips">暂无跟帖，抢占沙发</div>
     </div>
     <!-- 更多跟帖 -->
     <div class="moreComment">
       <div class="btn" @click="$router.push('/morecom/'+$route.params.id)">更多跟帖</div>
     </div>
+    <!-- 发表组件 -->
+    <CommentInput
+      ref="comment"
+      :comment="comment"
+      :articleDetail="articleDetail"
+      @flashComment="flashComment"
+    />
   </div>
 </template>
 
 <script>
 import Comment from "@/components/comment/Index";
+import CommentInput from "@/components/commentInput";
 export default {
   components: {
-    Comment
+    Comment,
+    CommentInput
   },
   data() {
     return {
       articleDetail: "",
-      commentList: []
+      commentList: [],
+      comment: ""
     };
   },
   created() {
+    // 文章详情
     this.$axios({
       url: "/post/" + this.$route.params.id
     }).then(res => {
-      console.log(res.data);
+      // console.log(res.data);
       this.articleDetail = res.data.data;
     });
     // 加载跟帖
-    this.$axios({
-      url: "/post_comment/" + this.$route.params.id
-    }).then(res => {
-      console.log(res.data);
-      if (res.data.data.length >= 3) {
-        res.data.data.length = 3;
-      }
-      this.commentList = res.data.data;
-    });
+    this.getComment();
   },
   methods: {
     // 关注
@@ -185,6 +188,31 @@ export default {
         "style",
         "display:none"
       );
+    },
+    // 封装获取跟帖列表
+    getComment() {
+      this.$axios({
+        url: "/post_comment/" + this.$route.params.id
+      }).then(res => {
+        console.log(res.data.data);
+        this.comment = res.data.data.length;
+        if (res.data.data.length >= 3) {
+          res.data.data.length = 3;
+        }
+        this.commentList = res.data.data;
+      });
+    },
+    // 刷新跟帖列表
+    flashComment() {
+      this.getComment();
+    },
+    // 主评论
+    reply(userobj) {
+      this.$refs.comment.showEvent(userobj);
+    },
+    // 中间评论
+    replyModule(userObj) {
+      this.$refs.comment.showEvent(userObj);
     }
   }
 };
@@ -192,9 +220,16 @@ export default {
 
 <style lang="less" scoped>
 .head {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   display: flex;
   align-items: center;
   padding: 0 5.56vw;
+  box-sizing: border-box;
+  background-color: #fff;
+  z-index: 10000;
   .iconjiantou2 {
     font-size: 4.17vw;
     margin-right: 1.39vw;
@@ -221,6 +256,7 @@ export default {
 }
 .picture {
   padding: 0 5.56vw;
+  margin-top: 60px;
   .title {
     font-size: 5vw;
     font-weight: 700;
@@ -246,6 +282,7 @@ export default {
 }
 .video {
   padding: 0 5.56vw;
+  margin-top: 60px;
   .box {
     position: relative;
     display: flex;
@@ -373,13 +410,14 @@ export default {
     text-align: center;
     margin: 5.56vw 0;
     color: #f24e4d;
+    font-size: 14px;
   }
 }
 .moreComment {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 5.56vw;
+  margin-bottom: 19.44vw;
   .btn {
     text-align: center;
     padding: 2.22vw 11.11vw;

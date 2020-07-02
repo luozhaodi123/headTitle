@@ -5,7 +5,7 @@
     <div class="comMain" v-if="commentList.length>0">
       <div class="user" v-for="item in commentList" :key="item.id">
         <div class="userInfo">
-          <img class="touxian" src="@/assets/logo.png" alt />
+          <img class="touxian" :src="$axios.defaults.baseURL+item.user.head_img" alt />
           <div class="info">
             <div class="nickname">{{item.user.nickname}}</div>
             <div class="time">2小时前</div>
@@ -15,7 +15,7 @@
         <Comment :comment="item" />
       </div>
     </div>
-    <div v-else class="tips">暂时还没有跟帖哦</div>
+    <div v-else class="tips">暂无跟帖，抢占沙发</div>
   </div>
 </template>
 
@@ -88,5 +88,6 @@ export default {
   text-align: center;
   margin: 5.56vw 0;
   color: #f24e4d;
+  font-size: 3.89vw;
 }
 </style>

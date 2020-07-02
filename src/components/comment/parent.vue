@@ -1,11 +1,16 @@
 <template>
   <div>
-    <Parent :parentData="parentData.parent" v-if="parentData.parent" />
+    <Parent
+      :parentLength="parentLength-1"
+      :parentData="parentData.parent"
+      v-if="parentData.parent"
+      @replyParent="replyModule"
+    />
     <div class="parentDom">
       <div class="user">
-        <div class="nickname">{{parentData.user.nickname}}</div>
+        <div class="nickname">{{parentLength+1}} {{parentData.user.nickname}}</div>
         <div class="time">2小时前</div>
-        <div class="reply">回复</div>
+        <div class="reply" @click="replyParent({id:parentData.id,user:parentData.user.nickname})">回复</div>
       </div>
       <div class="content">{{parentData.content}}</div>
     </div>
@@ -15,7 +20,27 @@
 <script>
 export default {
   props: ["parentData"],
-  name: "Parent"
+  name: "Parent",
+  methods: {
+    replyParent(userObj) {
+      // console.log(userObj);
+      this.$emit("replyParent", userObj);
+    },
+    replyModule(userObj) {
+      this.$emit("replyParent", userObj);
+    }
+  },
+  computed: {
+    parentLength() {
+      let depth = 0;
+      let current = this.parentData;
+      while (current.parent) {
+        depth += 1;
+        current = current.parent;
+      }
+      return depth;
+    }
+  }
 };
 </script>
 

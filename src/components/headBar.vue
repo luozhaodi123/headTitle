@@ -20,7 +20,8 @@ export default {
 .head {
   display: flex;
   align-items: center;
-  padding: 5.4vw 6.67vw;
+  height: 13.89vw;
+  padding: 0 6.67vw;
   background-color: #f24e4d;
   font-weight: 700;
   color: #fff;

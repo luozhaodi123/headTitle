@@ -1,6 +1,6 @@
 <template>
   <div class="commentMain">
-    <Parent :parentData="comment.parent" v-if="comment.parent" />
+    <Parent :parentData="comment.parent" @replyParent="replyMoudle" v-if="comment.parent" />
     <div class="newContent">{{comment.content}}</div>
   </div>
 </template>
@@ -11,7 +11,13 @@ export default {
   components: {
     Parent
   },
-  props: ["comment"]
+  props: ["comment"],
+  methods: {
+    replyMoudle(userObj) {
+      // console.log(userObj);
+      this.$emit("replyModule", userObj);
+    }
+  }
 };
 </script>
 
