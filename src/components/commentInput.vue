@@ -72,6 +72,7 @@ export default {
     // 展示输入框
     showEvent(userObj) {
       this.isShowTextarea = true;
+      //debug nextTick是vue中处理在数据变化之后等待vue完成更新Dom，该回调函数将在Dom更新完成后被调用
       this.$nextTick(() => {
         this.$refs.textArea.focus();
       });
@@ -80,6 +81,7 @@ export default {
     // 隐藏输入框
     hideEvent() {
       //debug 点击发表的时候，输入框失去焦点触发隐藏事件，导致click事件无法触发
+      //使用延时器，避免在发布评论请求时，请求未发出，评论内容就不见了
       setTimeout(() => {
         this.isShowTextarea = false;
       }, 100);

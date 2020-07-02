@@ -22,6 +22,7 @@ export default {
   props: ["parentData"],
   name: "Parent",
   methods: {
+    // 回复楼层递归里面的评论,通过接力的方式(就当点击某一个楼层然后传到下一个楼层的方式，把该id和nickname传出来)
     replyParent(userObj) {
       // console.log(userObj);
       this.$emit("replyParent", userObj);
@@ -31,6 +32,7 @@ export default {
     }
   },
   computed: {
+    // 使用计算属性监听楼层的长度
     parentLength() {
       let depth = 0;
       let current = this.parentData;
