@@ -9,7 +9,7 @@
         @focus="showEvent"
       />
       <div class="icon">
-        <div class="box" @click="$router.push('/morecom/'+$route.params.id)">
+        <div class="box" @click="goMoreComment">
           <div class="commlength">{{comment}}</div>
           <div class="iconfont iconpinglun-"></div>
         </div>
@@ -56,6 +56,10 @@ export default {
     }
   },
   methods: {
+    // 去更多跟帖页
+    goMoreComment() {
+      this.$router.push("/morecom/" + this.$route.params.id).catch(err => {});
+    },
     // 点击收藏
     handleStar() {
       this.$axios({

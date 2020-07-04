@@ -30,6 +30,10 @@
       <van-icon name="star-o" />
       <navBar class="itemList" textNavBarL="我的收藏" textNavBarM="文章/视频" @clicked="star" />
     </div>
+    <div class="list">
+      <van-icon name="star-o" />
+      <navBar class="itemList" textNavBarL="我的栏目" textNavBarM="管理栏目" @clicked="manager" />
+    </div>
     <btnDom btnText="退出登录" @clickBtn="logout" />
   </div>
 </template>
@@ -57,10 +61,13 @@ export default {
       this.$router.push("attent");
     },
     comment() {
-      this.$router.push("comment");
+      this.$router.push("mycomment");
     },
     star() {
       this.$router.push("star");
+    },
+    manager() {
+      this.$router.push("manager");
     },
     logout() {
       console.log("父组件接收到子组件的触发事件了");

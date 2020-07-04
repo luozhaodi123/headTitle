@@ -10,35 +10,72 @@
             <div class="nickname">{{item.user.nickname}}</div>
             <div class="time">2小时前</div>
           </div>
-          <div class="reply">回复</div>
+          <div class="reply" @click="reply({id:item.id,user:item.user.nickname})">回复</div>
         </div>
-        <Comment :comment="item" />
+        <Comment :comment="item" @replyModule="replyModule" />
       </div>
     </div>
     <div v-else class="tips">暂无跟帖，抢占沙发</div>
+    <CommentInput
+      :articleDetail="articleDetail"
+      :comment="comment"
+      ref="comment"
+      @flashComment="flashComment"
+    />
   </div>
 </template>
 
 <script>
 import headBar from "@/components/headBar";
 import Comment from "@/components/comment/Index";
+import CommentInput from "@/components/commentInput";
 export default {
   components: {
     headBar,
-    Comment
+    Comment,
+    CommentInput
   },
   data() {
     return {
-      commentList: []
+      commentList: [],
+      articleDetail: "",
+      comment: ""
     };
   },
   created() {
+    // 获取评论
+    this.getComment();
+    // 文章详情
     this.$axios({
-      url: "/post_comment/" + this.$route.params.id
+      url: "/post/" + this.$route.params.id
     }).then(res => {
       console.log(res.data);
-      this.commentList = res.data.data;
+      this.articleDetail = res.data.data;
     });
+  },
+  methods: {
+    // 封装获取跟帖列表
+    getComment() {
+      this.$axios({
+        url: "/post_comment/" + this.$route.params.id
+      }).then(res => {
+        console.log(res.data.data);
+        this.comment = res.data.data.length;
+        this.commentList = res.data.data;
+      });
+    },
+    // 回复主评论
+    reply(userObj) {
+      this.$refs.comment.showEvent(userObj);
+    },
+    // 中间评论
+    replyModule(userObj) {
+      this.$refs.comment.showEvent(userObj);
+    },
+    // 刷新跟帖评论
+    flashComment() {
+      this.getComment();
+    }
   }
 };
 </script>
