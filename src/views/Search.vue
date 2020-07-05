@@ -12,7 +12,9 @@
       <div class="history">
         <div class="histBox">
           <div class="title">历史记录</div>
-          <div class="clear right" @click="clearList">清空</div>
+          <div class="clear right" @click="showTip = true">
+            <img class="trash" src="@/assets/trash.png" alt />
+          </div>
         </div>
         <div class="histWord">
           <div
@@ -26,7 +28,7 @@
       <div class="hot">
         <div class="histBox">
           <div class="title">热门搜索</div>
-          <div class="flash right">
+          <div class="flash right" @click="switchList">
             换一换
             <img src="@/assets/flash.png" alt />
           </div>
@@ -40,14 +42,22 @@
           >
             <div class="rank">{{index+1}}</div>
             <div class="cont">{{item.hotWord}}</div>
-            <div class="number">{{item.number+"万"}}</div>
+            <!-- <div class="number">{{item.number+"万"}}</div> -->
           </div>
         </div>
       </div>
     </div>
     <div class="content">
-      <newList :post="item" v-for="item in postList" :key="item.id" />
+      <newList @clicked="toArticleDetail" :post="item" v-for="item in postList" :key="item.id" />
     </div>
+    <!-- 删除历史记录提示框 -->
+    <van-dialog
+      v-model="showTip"
+      title="提示"
+      message="是否要清空历史记录？"
+      show-cancel-button
+      @confirm="clearList"
+    ></van-dialog>
   </div>
 </template>
 
@@ -63,13 +73,17 @@ export default {
       postList: [],
       hostoryList: [],
       hotList: [
-        { hotWord: "华为", number: 491 },
-        { hotWord: "双语阅读", number: 474 },
-        { hotWord: "阿信", number: 456 },
-        { hotWord: "美女", number: 441 },
-        { hotWord: "关晓彤", number: 411 },
-        { hotWord: "王祖贤", number: 398 }
-      ]
+        { hotWord: "华为首发计算战略", number: 491 },
+        {
+          hotWord: "双语阅读耿直！",
+          number: 474
+        },
+        { hotWord: "阿信分享《说好不哭》幕后故事", number: 456 },
+        { hotWord: "美女一首《亲爱的姑娘我爱你》", number: 441 },
+        { hotWord: "关晓彤，下雨了回家收衣服吧", number: 411 },
+        { hotWord: "王祖贤在就餐时被拍", number: 398 }
+      ],
+      showTip: false
     };
   },
   created() {
@@ -105,7 +119,7 @@ export default {
           keyword: this.textValue
         }
       }).then(res => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
         if (res.data.data.length > 0) {
           this.postList = res.data.data;
           // 将搜索记录存储在本地存储中，防止下次刷新原来的记录不见了
@@ -133,6 +147,26 @@ export default {
     clearList() {
       this.hostoryList = [];
       localStorage.removeItem("history");
+    },
+    // 跳转到文章详情页
+    toArticleDetail(id) {
+      this.$router.push("/articleDetail/" + id);
+    },
+    // 刷新热点搜索
+    switchList() {
+      console.log("刷新热点搜索");
+      let newHotList = [];
+      const length = this.hotList.length;
+      let listIndex = Math.floor(Math.random() * length);
+      while (newHotList.length < length) {
+        if (!newHotList.includes(this.hotList[listIndex])) {
+          newHotList.push(this.hotList[listIndex]);
+        } else {
+          listIndex = Math.floor(Math.random() * length);
+        }
+      }
+      // console.log(newHotList);
+      this.hotList = newHotList;
     }
   }
 };
@@ -140,23 +174,31 @@ export default {
 
 <style lang="less" scoped>
 .head {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   display: flex;
   align-items: center;
   padding: 2.78vw 5.56vw;
+  box-sizing: border-box;
+  background-color: #fff;
+  // z-index: 9999;
   .search {
+    display: flex;
+    align-items: center;
     flex: 1;
-    height: 8.89vw;
-    line-height: 8.89vw;
     border-radius: 4.44vw;
     border: 1px solid #ccc;
     margin: 0 10px;
-    padding: 2px 4.44vw;
+    padding: 10px 4.44vw;
     .iconsearch {
       padding-right: 1.39vw;
       font-size: 4.17vw;
     }
     input {
       border: 0;
+      flex: 1;
       &::placeholder {
         font-size: 4.17vw;
         color: #333;
@@ -169,8 +211,7 @@ export default {
   }
 }
 .suggestion {
-  padding: 2.78vw 0;
-  margin: 0 5.56vw;
+  margin: 55px 5.56vw 0;
   .histBox {
     display: flex;
     align-items: center;
@@ -190,6 +231,10 @@ export default {
         height: 3.61vw;
         margin-left: 2px;
       }
+      .trash {
+        width: 6.67vw;
+        height: 6.67vw;
+      }
     }
   }
   .history {
@@ -198,11 +243,14 @@ export default {
     .histWord {
       display: flex;
       flex-wrap: wrap;
+      padding: 0 0 10px;
       .word {
-        margin: 0 1.39vw;
-        padding: 2.78vw 1.39vw;
-        font-size: 3.61vw;
+        margin: 1.11vw 1.39vw;
+        padding: 2.22vw 4.17vw;
+        background-color: #f1f3f4;
+        font-size: 3.33vw;
         color: #333;
+        border-radius: 5.56vw;
       }
     }
   }
@@ -246,5 +294,8 @@ export default {
       }
     }
   }
+}
+.content {
+  margin-top: 16.67vw;
 }
 </style>

@@ -76,7 +76,7 @@ export default {
         url: "/category"
       }).then(res => {
         console.log(res.data.data);
-        this.allList = res.data.data;
+        this.myList = res.data.data;
       });
     }
   }

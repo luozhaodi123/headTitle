@@ -66,30 +66,46 @@ export default {
   methods: {
     // 获取tab栏目
     getTab() {
+      // 先从本地获取栏目
+      const myList = localStorage.getItem("myList");
+      if (myList) {
+        const res = {
+          data: {
+            data: JSON.parse(myList)
+          }
+        };
+        this.makeArticle(res);
+        return;
+      }
+      // 本地若没有就向后台发送请求
       this.$axios({
         url: "/category",
         method: "get"
       }).then(res => {
         // console.log(res.data);
-        const { data } = res.data;
-        // this.categoryList = data;
-        // 分栏目管理文章列表
-        // 主要是通过挂上一个空数组用来管理栏目自己的文章
-        const newData = data.map(item => {
-          return {
-            ...item,
-            article: [],
-            pageIndex: 1,
-            pageSize: 5,
-            loading: false,
-            finished: false
-          };
-        });
-        this.categoryList = newData;
-        // console.log(this.categoryList);
-        //当tab分类栏加载完毕后才发送获取文章列表的请求
-        this.getPost();
+        this.makeArticle(res);
       });
+    },
+    // 配置获取tab栏以及文章
+    makeArticle(res) {
+      const { data } = res.data;
+      // this.categoryList = data;
+      // 分栏目管理文章列表
+      // 主要是通过挂上一个空数组用来管理栏目自己的文章
+      const newData = data.map(item => {
+        return {
+          ...item,
+          article: [],
+          pageIndex: 1,
+          pageSize: 5,
+          loading: false,
+          finished: false
+        };
+      });
+      this.categoryList = newData;
+      // console.log(this.categoryList);
+      //当tab分类栏加载完毕后才发送获取文章列表的请求
+      this.getPost();
     },
     loadMoreArticle() {
       console.log("进入了加载下一页");

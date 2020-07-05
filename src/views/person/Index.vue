@@ -31,7 +31,7 @@
       <navBar class="itemList" textNavBarL="我的收藏" textNavBarM="文章/视频" @clicked="star" />
     </div>
     <div class="list">
-      <van-icon name="star-o" />
+      <van-icon name="orders-o" />
       <navBar class="itemList" textNavBarL="我的栏目" textNavBarM="管理栏目" @clicked="manager" />
     </div>
     <btnDom btnText="退出登录" @clickBtn="logout" />
